@@ -1,2 +1,2 @@
-# website
-Personal Website code
+# Personal Website - Nidhi Chaudhary
+Personal Website code - 2020
