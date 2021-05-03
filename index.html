@@ -7,14 +7,88 @@
   <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700|Poppins:400,500,600,700" rel="stylesheet"> 
 </head>
+<script>
+  var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+        }
+
+        setTimeout(function() {
+        that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+              new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid var(--primary)}";
+        document.body.appendChild(css);
+    };
+
+    setTimeout(function() {
+    $('#circle').hide();
+    }, 1800);
+
+</script>
 
 <body>
+  <!-- Progress bar -->
+  <div id="circle">
+    <div class="loader">
+      <div class="loader">
+          <div class="loader">
+             <div class="loader">
+             </div>
+          </div>
+      </div>
+    </div>
+  </div> 
+
 
   <div class="wrapper row">
     <nav id="sidebar">
@@ -34,9 +108,9 @@
         <li>
           <a href="#projects">Academic Projects</a>
         </li>
-        <li>
+        <!-- <li>
           <a href="#interests">Interests</a>
-        </li>
+        </li> -->
         <li>
           <a href="#achievements">Achievements</a>
         </li>
@@ -46,24 +120,35 @@
     <div id="content" class="p-4 p-md-5 pt-5">
       <section id="about" class="resume-section">
         <div class="text-center font-weight-bold">
-          <h3 class="font-italic change-greeting">Hello, I'm </h3>
+          <!-- <h3 class="font-italic change-greeting">Hello, I'm </h3>
           <h3 class="font-italic change-greeting">¡Hola!, I'm </h3>
           <h3 class="font-italic change-greeting">नमस्ते, I'm </h3>
-          <h1 class="mb-4 color-primary fancy-heading">NIDHI CHAUDHARY</h1>
+          <h1 class="mb-4 color-primary fancy-heading">NIDHI CHAUDHARY</h1> -->
+          <h1 class="typewrite color-primary"data-period="2000" data-type='[ "Welcome!", "I am Nidhi Chaudhary.", "I am Software Engineer.", "I Love to Develop." ]'>
+            <span class="wrap"></span>
+          </h1>
+          
         </div>
         <div class='d-md-flex d-lg-flex d-xl-flex justify-content-center m-2'>
-          <p class="px-3 font-italic "><img src='images/map-marker-alt-solid.svg' class='icon'>1189 W 29th Street Los
-            Angeles, 90007
+          <!-- <i class='fas fa-map-marker-alt' class='icon'></i>
+          <p class="px-3 font-italic">Los Angeles, California</p> -->
+          <p class="px-3 font-italic "><img src='images/map.svg' class='icon'>Los
+            Angeles, California
           </p>
-          <p class="px-3"><img src='images/phone-alt-solid.svg' class='icon'>(213)-725-8641</p>
-          <p class="px-3"><img src='images/envelope-solid.svg' class='icon'><a
+          <p class="px-3"><img src='images/call.svg' class='icon'>(213)-725-8641</p>
+          <p class="px-3"><img src='images/email.svg' class='icon'><a
               href="mailto:nidhicha@usc.edu">nidhicha@usc.edu</a></p>
         </div>
-        <p class="quote mt-3">
-          </blockquote>Welcome to my website! I'm a graduate student in Computer Science at University of Southern California. Being an inquisitive person, I like to dive into depth of problems rather than solving them on surface.
-           I am a planner and believe in organizing my thoughts first rather than jumping straight to execution. A 2-year work experience at a startup taught me how to multi-task and not to succumb under pressure. Navigate forward to know me more!</p>
+        <p class="quote">
+          </blockquote>Welcome to my website! I'm a graduate student in Computer Science at University of Southern California. 
+          Being an inquisitive person, I like to dive into depth of problems rather than solving them on surface.
+           I am a planner and believe in organizing my thoughts first rather than jumping straight to execution. 
+           A 2-year work experience at a startup taught me how to multi-task and not to succumb under pressure. 
+           Navigate forward to know me more!</p>
+        <br>
         <br>
         <h5 class='fancy-heading'>Let's connect</h5>
+
         <div class='row justify-content-center'>
           <img src='images/linkedin.png' class="social-media"
             onclick='window.open("https://www.linkedin.com/in/nidhi86/");'>
@@ -79,7 +164,7 @@
 
       <section id="education" class="resume-section">
         <h1 class="mb-4 color-primary fancy-heading">Education</h1>
-        <br>
+
         <ul class="timeline">
           <li>
         <div class="container-fluid">
@@ -88,32 +173,38 @@
               <img src="images/usc_logo.png" class="img-fluid" alt="">
             </div>
             <div class="col-10">
-              <h5>University of Southern California, Los Angeles (Aug 2019- May 2021)</h5>
-              <p class="mb-0 font-italic">MS, Computer Science (General Track)</p>
-              <p class="mb-2">GPA - 3.75/4.00</p>
+              <h6>University of Southern California, Los Angeles (Aug 2019- May 2021)</h6>
             </div>
+            <div>
+            <p class="mb-0 font-italic">MS, Computer Science (General Track)</p>
+            <p>GPA - 3.83/4.00</p>
+          </div>
           </div>
           <div class="row no-gutters">
             <p class="badge">Artificial Intelligence</p>
             <p class="badge">Algorithm Design</p>
             <p class="badge"> Web Technologies</p>
             <p class="badge">Database Systems</p>
+            <p class="badge">Machine Learning</p>
+            <p class="badge">Information Retrieval through Web</p>
+            <p class="badge">Machine Learning for Games</p>
           </div>
         </div>
         </li>
-        <br>
         <hr>
         <li>
         <div class="container-fluid">
           <div class="row no-gutters">
-            <div class="col-2">
-              <img src="images/iiitdmj_logo.jpg" height="90" width="100" class="img-fluid" alt="">
+            <div class="col-1 mx-2">
+              <img src="images/iiitdmj_logo.png" height="90" width="100" class="img-fluid" alt="">
             </div>
             <div class="col-10">
-              <h5>Indian Institute of Information Technology Design and Manufacturing, Jabalpur (Aug 2013- May 2017)
-              </h5>
+              <h6>Indian Institute of Information Technology Design and Manufacturing, Jabalpur (Aug 2013- May 2017)
+              </h6>
+            </div>
+            <div>
               <p class="mb-0 font-italic">Bachelor of Technology, Computer Science and Engineering</p>
-              <p class="mb-2">GPA - 9.1/10.0</p>
+              <p>GPA - 9.1/10.0</p>
             </div>
           </div>
           <div class="row no-gutters">
@@ -140,10 +231,34 @@
 
       <section id="experience" class="resume-section">
         <h1 class="mb-4 color-primary fancy-heading">My Job Experiences</h1>
-        <br>
         <div class="container-fluid">
           <div class="row no-gutters">
-            <div class="col-2">
+            <div class="col-1 mx-2">
+              <img src="images/salesforce_logo.svg" class="img-fluid" alt="">
+            </div>
+            <div class="col-10">
+              <h5>Salesforce Research, Palo Alto, CA</h5>
+              <p class="mb-0 font-italic">Software Engineering Intern (June 2020- Aug 2020)</p>
+            </div>
+            <div class="row no-gutters">
+            <ul class="timeline">
+              <li> Developed a unified approval process framework for Training and Experimentation framework of Einstein.ai platform services.</li>
+                <div class="row no-gutters">
+                  <p class="badge-sm">Java</p>
+                  <p class="badge-sm">Spring</p>
+                  <p class="badge-sm">SQL</p>
+                  <p class="badge-sm">Jenkins</p>
+                  <p class="badge-sm">Maven</p>
+                  <p class="badge-sm">Kubernetes</p>
+                </div>
+            </ul>
+          </div>
+        </div>
+        </div>
+        <hr>
+        <div class="container-fluid">
+          <div class="row no-gutters">
+            <div class="col-1 mx-2">
               <img src="images/vassar_logo.png" class="img-fluid" alt="">
             </div>
             <div class="col-10">
@@ -197,11 +312,10 @@
               </li>
             </ul>
         </div>
-        <br>
         <hr>
         <div class="container-fluid">
           <div class="row no-gutters">
-            <div class="col-2">
+            <div class="col-1 mx-2">
               <img src="images/canon_logo.png" class="img-fluid" alt="">
             </div>
             <div class="col-10">
@@ -299,9 +413,9 @@
           </div>
         </div>
       </section>
-      <hr>
+      <!-- <hr> -->
 
-      <section id="interests" class="resume-section">
+      <!-- <section id="interests" class="resume-section">
         <h1 class="mb-4 color-primary fancy-heading">What interests me</h1>
         <p class="quote mt-3">
         </blockquote>I'm a big bollywood junkie and like to watch movies and series. When alone, I like to read books. These days
@@ -309,8 +423,8 @@
           I like to sketch, paint and dance in my free time. I have been a part of dance club(Avartan) and dramatics
           club(Jazbaat) at my undergraduate college, where I gave some stage performances too.
           I have a knack for adventurous rides like humongous roller coasters and adrenaline fueled rides.</p>
-        <br>
-        <div class="container">
+        <br> -->
+        <!-- <div class="container">
           <div class="row">
             <div class="col-lg-3 col-md-4 col-xs-6">
               <img src="images/art-2.JPG" class="zoom img-fluid " alt="">
@@ -326,7 +440,7 @@
             <div class="col-lg-3 col-md-4 col-xs-6">
               <img src="images/fuji-q.jpg" class="zoom img-fluid " alt="">
             </div>
-          </div>
+          </div> -->
           <!-- <div class="container-fluid">
           <div class="row" >
           <div class="col"><img class="img-thumbnail collage" src="images/art-1.JPG"></div>
@@ -363,7 +477,6 @@
   <script src="js/main.js"></script>
   <script>
     changeGreeting()
-    // carousal()
   </script>
 </body>
 
