@@ -42,6 +42,13 @@ section .resume-section{
   padding-bottom: 5rem!important;
 }
 
+@media(min-width: 256px){
+  section.resume-section{
+    min-height: 100vh;
+    min-width: 18rem;
+  }
+}
+
 @media(min-width: 768px){
   section.resume-section{
     min-height: 100vh;
@@ -4413,6 +4420,12 @@ h1, h2, h3, h4, h5
 a[data-toggle="collapse"] {
   position: relative; }
 
+@media (max-width: 568px) {
+    #sidebar {
+      display: none;
+      padding: 1rem;
+    }
+  }
 @media (max-width: 991.98px) {
   #sidebarCollapse span {
     display: none; } }
